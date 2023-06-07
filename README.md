@@ -6,4 +6,4 @@ A new Flutter project.
 
 This project is a starting point for a Online Bank Flutter application.
 
-Goto 
+### => Install suitable ".apk" files uploaded in this project folder
