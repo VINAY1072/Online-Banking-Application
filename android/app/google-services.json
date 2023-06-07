@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "902345702798",
+    "project_id": "vibhank-b9af4",
+    "storage_bucket": "vibhank-b9af4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902345702798:android:7e34e7435ca6b8f3b0f8df",
+        "android_client_info": {
+          "package_name": "com.example.bank_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADXDG-vUyF7Is9Fu58tFRRCyQ2MBjUw7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
