@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:bank_app/pages/login_page.dart';
+import 'package:bank_app/pages/login_pages/login_page.dart';
 
 // import 'home.dart';
 
