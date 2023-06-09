@@ -256,7 +256,12 @@ class _SceneState extends State<Scene> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Base()));
+                            },
                             child: Text(
                               'LOG IN',
                               style: TextStyle(color: Color(0xffff735c)),

@@ -152,7 +152,12 @@ class _SignupState extends State<Signup> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Base()));
+                          },
                           child: Text(
                             'SIGNUP',
                             style: TextStyle(color: Color(0xffff735c)),
