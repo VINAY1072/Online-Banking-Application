@@ -12,18 +12,13 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  var _email = TextEditingController();
   var _pass = TextEditingController();
-  var _confpass = TextEditingController();
-  var _name = TextEditingController();
   bool _obsText = true;
-  bool _obsText1 = true;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _obsText = true;
-    _obsText1 = true;
   }
 
   @override
