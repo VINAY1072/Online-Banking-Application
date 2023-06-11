@@ -1,3 +1,5 @@
+import 'package:bank_app/pages/login_pages/forget_pass_pages/forget_pass_mail.dart';
+import 'package:bank_app/pages/login_pages/forget_pass_pages/forget_pass_phone.dart';
 import 'package:flutter/material.dart';
 
 class PassFor extends StatefulWidget {
@@ -30,7 +32,10 @@ class _PassForState extends State<PassFor> {
             height: 50,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => ForPassMail()));
+            },
             child: Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -72,7 +77,10 @@ class _PassForState extends State<PassFor> {
             height: 30,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => ForPassPhone()));
+            },
             child: Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(

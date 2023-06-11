@@ -2,6 +2,8 @@ import 'package:bank_app/pages/login_pages/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../controllers/controller.dart';
+
 class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -102,6 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
               child: OutlinedButton(
                 style: OutButtonStyle,
                 onPressed: () {
+                  SignUpController.instance.logoutUser();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => Scene()));
                 },

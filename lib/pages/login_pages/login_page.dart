@@ -2,8 +2,11 @@ import 'package:bank_app/base_screen.dart';
 import 'package:bank_app/pages/login_pages/forget_pass_pages/forget_pass_sheet.dart';
 import 'package:bank_app/pages/login_pages/signup_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 // import 'home_pages/home.dart';
 import '../../utils.dart';
+import '../controllers/controller.dart';
 
 class Scene extends StatefulWidget {
   const Scene({super.key});
@@ -25,6 +28,8 @@ class _SceneState extends State<Scene> {
 
   @override
   Widget build(BuildContext context) {
+    final controller1 = Get.put(SignUpController());
+    final _formkey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -62,117 +67,90 @@ class _SceneState extends State<Scene> {
                     ),
                   ),
                   Form(
+                      key: _formkey,
                       child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.email_outlined),
-                            prefixIconColor: Color(0xffff735c),
-                            labelText: 'E-mail',
-                            labelStyle: TextStyle(color: Color(0xffff735c)),
-                            hintText: 'E-mail',
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xffff735c))),
-                          ),
-                          cursorColor: Color(0xffff735c),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter Your Password';
-                            }
-                            return null;
-                          },
-                          obscureText: _obsText,
-                          controller: _pass,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.lock_outline_rounded),
-                            prefixIconColor: Color(0xffff735c),
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _obsText = !_obsText;
-                                });
-                              },
-                              child: Icon(_obsText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                            ),
-                            labelText: 'Password',
-                            labelStyle: TextStyle(color: Color(0xffff735c)),
-                            hintText: 'Password',
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xffff735c))),
-                          ),
-                          cursorColor: Color(0xffff735c),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: TextButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) => PassFor());
-                            },
-                            child: Text(
-                              'Forget Password?',
-                              style: TextStyle(color: Color(0xffff735c)),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Base()));
-                            },
-                            child: Text(
-                              'LOG IN',
-                              style: TextStyle(color: Color(0xffff735c)),
-                            ),
-                            style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5)))),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        padding: EdgeInsets.symmetric(vertical: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: 10,
+                            TextFormField(
+                              controller: controller1.email,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email_outlined),
+                                prefixIconColor: Color(0xffff735c),
+                                labelText: 'E-mail',
+                                labelStyle: TextStyle(color: Color(0xffff735c)),
+                                hintText: 'E-mail',
+                                border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xffff735c))),
+                              ),
+                              cursorColor: Color(0xffff735c),
                             ),
-                            Text('OR'),
                             SizedBox(
-                              height: 10,
+                              height: 20,
+                            ),
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter Your Password';
+                                }
+                                return null;
+                              },
+                              obscureText: _obsText,
+                              controller: controller1.password,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.lock_outline_rounded),
+                                prefixIconColor: Color(0xffff735c),
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _obsText = !_obsText;
+                                    });
+                                  },
+                                  child: Icon(_obsText
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                ),
+                                labelText: 'Password',
+                                labelStyle: TextStyle(color: Color(0xffff735c)),
+                                hintText: 'Password',
+                                border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xffff735c))),
+                              ),
+                              cursorColor: Color(0xffff735c),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) => PassFor());
+                                },
+                                child: Text(
+                                  'Forget Password?',
+                                  style: TextStyle(color: Color(0xffff735c)),
+                                ),
+                              ),
                             ),
                             SizedBox(
                               width: double.infinity,
-                              child: OutlinedButton.icon(
-                                onPressed: () {},
-                                label: Text(
-                                  'Sign In with Google',
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (_formkey.currentState!.validate()) {
+                                    SignUpController.instance.loginUser(
+                                        controller1.email.text.trim(),
+                                        controller1.password.text.trim());
+                                  }
+                                },
+                                child: Text(
+                                  'LOG IN',
                                   style: TextStyle(color: Color(0xffff735c)),
-                                ),
-                                icon: Image(
-                                  image: AssetImage('images/google.png'),
-                                  width: 20,
                                 ),
                                 style: ButtonStyle(
                                     shape: MaterialStateProperty.all<
@@ -182,31 +160,62 @@ class _SceneState extends State<Scene> {
                                                 BorderRadius.circular(5)))),
                               ),
                             ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Signup()));
-                                },
-                                child: Text.rich(TextSpan(
-                                  text: "Don't have an Account?",
-                                  style: TextStyle(
-                                      color: const Color.fromARGB(
-                                          255, 79, 78, 78)),
-                                  children: [
-                                    TextSpan(
-                                      text: " SIGNUP",
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text('OR'),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: OutlinedButton.icon(
+                                    onPressed: () {},
+                                    label: Text(
+                                      'Sign In with Google',
                                       style:
                                           TextStyle(color: Color(0xffff735c)),
-                                    )
-                                  ],
-                                )))
+                                    ),
+                                    icon: Image(
+                                      image: AssetImage('images/google.png'),
+                                      width: 20,
+                                    ),
+                                    style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5)))),
+                                  ),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Signup()));
+                                    },
+                                    child: Text.rich(TextSpan(
+                                      text: "Don't have an Account?",
+                                      style: TextStyle(
+                                          color: const Color.fromARGB(
+                                              255, 79, 78, 78)),
+                                      children: [
+                                        TextSpan(
+                                          text: " SIGNUP",
+                                          style: TextStyle(
+                                              color: Color(0xffff735c)),
+                                        )
+                                      ],
+                                    )))
+                              ],
+                            )
                           ],
-                        )
-                      ],
-                    ),
-                  ))
+                        ),
+                      ))
                 ]),
           ),
         ),
