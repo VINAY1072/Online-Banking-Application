@@ -6,6 +6,6 @@ A new Flutter project.
 
 This project is a starting point for a Online Bank Flutter application.
 
-### => Install suitable ".apk" files uploaded in this project folder.
+### => You can find the debug application in "APK_D" folder.
 
 ### => You can find the source code in "lib" folder.
