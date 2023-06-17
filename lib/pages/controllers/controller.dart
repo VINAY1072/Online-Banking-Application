@@ -13,13 +13,13 @@ class SignUpController extends GetxController {
   final phoneNo = TextEditingController();
 
   void registerUser(String email, String password) {
-    AuthenticationRepository.instance
-        .createUserWithEmailAndPass(email, password);
-  }
-
-  void loginUser(String email, String password) {
-    AuthenticationRepository.instance
-        .loginUserWithEmailAndPass(email, password);
+    String? error = AuthenticationRepository.instance
+        .createUserWithEmailAndPass(email, password) as String?;
+    if (error != null) {
+      Get.showSnackbar(GetSnackBar(
+        message: error.toString(),
+      ));
+    }
   }
 
   void logoutUser() {

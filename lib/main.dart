@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-// import 'home.dart';
 import 'pages/data_and_other_useful_pages/splash.dart';
 
 Future<void> main() async {

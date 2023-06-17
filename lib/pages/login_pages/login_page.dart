@@ -7,6 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 // import 'home_pages/home.dart';
 import '../../utils.dart';
 import '../controllers/controller.dart';
+import '../controllers/login_controller.dart';
 
 class Scene extends StatefulWidget {
   const Scene({super.key});
@@ -28,7 +29,7 @@ class _SceneState extends State<Scene> {
 
   @override
   Widget build(BuildContext context) {
-    final controller1 = Get.put(SignUpController());
+    final controller1 = Get.put(LoginController());
     final _formkey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
@@ -143,7 +144,7 @@ class _SceneState extends State<Scene> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (_formkey.currentState!.validate()) {
-                                    SignUpController.instance.loginUser(
+                                    LoginController.instance.loginUser(
                                         controller1.email.text.trim(),
                                         controller1.password.text.trim());
                                   }
