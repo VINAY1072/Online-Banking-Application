@@ -1,6 +1,7 @@
 // import 'package:bank_app/pages/home_pages/home.dart';
 import 'package:bank_app/pages/login_pages/login_page.dart';
 import 'package:bank_app/pages/controllers/controller.dart';
+import 'package:bank_app/pages/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -162,9 +163,21 @@ class _SignupState extends State<Signup> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (_formkey.currentState!.validate()) {
+                                // 1
+
+                                // 2
+                                final user = UserModel(
+                                    email: controller.email.text.trim(),
+                                    fullName: controller.fullName.text.trim(),
+                                    phoneNo: controller.phoneNo.text.trim());
+                                SignUpController.instance.createUser(user);
                                 SignUpController.instance.registerUser(
                                     controller.email.text.trim(),
                                     controller.password.text.trim());
+                                controller.email.clear();
+                                controller.password.clear();
+                                controller.fullName.clear();
+                                controller.phoneNo.clear();
                               }
                             },
                             child: Text(

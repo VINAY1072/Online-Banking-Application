@@ -1,11 +1,16 @@
-import 'package:bank_app/pages/controllers/auth_repo.dart';
+import 'package:bank_app/pages/repository/auth_repo.dart';
+import 'package:bank_app/pages/repository/user_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../models/user_model.dart';
 
 class SignUpController extends GetxController {
   var isPathSet = false.obs;
   var profpicpath = "".obs;
   static SignUpController get instance => Get.find();
+
+  final userRepo = Get.put(UserRepository());
 
   final email = TextEditingController();
   final fullName = TextEditingController();
@@ -20,6 +25,10 @@ class SignUpController extends GetxController {
         message: error.toString(),
       ));
     }
+  }
+
+  Future<void> createUser(UserModel user) async {
+    await userRepo.createUser(user);
   }
 
   void logoutUser() {

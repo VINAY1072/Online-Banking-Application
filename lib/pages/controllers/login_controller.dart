@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:bank_app/pages/controllers/auth_repo.dart';
+import 'package:bank_app/pages/repository/auth_repo.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();

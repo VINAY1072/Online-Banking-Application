@@ -42,6 +42,7 @@ dependencies:
   pinput: ^2.2.31
   image_picker: ^0.8.7+5
   get: ^4.6.5
+  cloud_firestore: ^4.8.1
 
 dev_dependencies:
   flutter_test:

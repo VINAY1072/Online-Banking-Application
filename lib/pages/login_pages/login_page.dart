@@ -147,6 +147,8 @@ class _SceneState extends State<Scene> {
                                     LoginController.instance.loginUser(
                                         controller1.email.text.trim(),
                                         controller1.password.text.trim());
+                                    controller1.email.clear();
+                                    controller1.password.clear();
                                   }
                                 },
                                 child: Text(
