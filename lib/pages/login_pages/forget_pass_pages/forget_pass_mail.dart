@@ -1,5 +1,7 @@
-import 'package:bank_app/pages/login_pages/forget_pass_pages/verify.dart';
+import 'package:bank_app/pages/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../utils.dart';
 
@@ -13,6 +15,8 @@ class ForPassMail extends StatefulWidget {
 class _ForPassMailState extends State<ForPassMail> {
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
+    final _formkey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -78,26 +82,29 @@ class _ForPassMailState extends State<ForPassMail> {
                     ),
                   ),
                   Form(
+                      key: _formkey,
                       child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.email_outlined),
-                            prefixIconColor: Colors.black,
-                            labelText: 'E-mail',
-                            labelStyle: TextStyle(color: Colors.black),
-                            hintText: 'E-mail',
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black)),
-                          ),
-                          cursorColor: Colors.black,
+                        padding: EdgeInsets.symmetric(vertical: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextFormField(
+                              controller: controller.email,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email_outlined),
+                                prefixIconColor: Colors.black,
+                                labelText: 'E-mail',
+                                labelStyle: TextStyle(color: Colors.black),
+                                hintText: 'E-mail',
+                                border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.black)),
+                              ),
+                              cursorColor: Colors.black,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )),
+                      )),
                   SizedBox(
                     height: 10,
                   ),
@@ -106,10 +113,8 @@ class _ForPassMailState extends State<ForPassMail> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MyVerify()));
+                        LoginController.instance
+                            .resetPassViaEmail(controller.email.text.trim());
                       },
                       child: Text(
                         'NEXT',

@@ -1,3 +1,4 @@
+import 'package:bank_app/pages/controllers/otp_contoller.dart';
 import 'package:bank_app/pages/repository/auth_repo.dart';
 import 'package:bank_app/pages/controllers/controller.dart';
 import 'package:bank_app/pages/controllers/login_controller.dart';
@@ -13,6 +14,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   Get.put(SignUpController());
   Get.put(LoginController());
+  Get.put(OtpController());
   Get.put(AuthenticationRepository());
   runApp(const MyApp());
 }

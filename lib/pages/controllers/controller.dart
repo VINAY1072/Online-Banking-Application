@@ -35,6 +35,10 @@ class SignUpController extends GetxController {
     AuthenticationRepository.instance.logout();
   }
 
+  void phoneAuthentication(String phoneNo) {
+    AuthenticationRepository.instance.phoneAuthentication(phoneNo);
+  }
+
   void setprofimagepath(String path) {
     profpicpath.value = path;
     isPathSet.value = true;

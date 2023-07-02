@@ -9,6 +9,7 @@ class AuthenticationRepository extends GetxController {
 
   final _auth = FirebaseAuth.instance;
   late final Rx<User?> firebaseUser;
+  var verificationId = ''.obs;
 
   @override
   void onReady() {
@@ -19,6 +20,34 @@ class AuthenticationRepository extends GetxController {
 
   _setInitialScreen(User? user) {
     user == null ? Get.offAll(() => Scene()) : Get.offAll(() => Base());
+  }
+
+  Future<void> phoneAuthentication(String phoneNo) async {
+    await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNo,
+        verificationCompleted: (credential) async {
+          await _auth.signInWithCredential(credential);
+        },
+        verificationFailed: (e) {
+          if (e.code == 'invalid-phone-number') {
+            Get.snackbar("Error,", "The provided phone number is invalid");
+          } else {
+            Get.snackbar("Error,", "Something went wrong. Try again");
+          }
+        },
+        codeSent: (verificationId, resendToken) {
+          this.verificationId.value = verificationId;
+        },
+        codeAutoRetrievalTimeout: (verificationId) {
+          this.verificationId.value = verificationId;
+        });
+  }
+
+  Future<bool> verifyOtp(String otp) async {
+    var credentials = await _auth.signInWithCredential(
+        PhoneAuthProvider.credential(
+            verificationId: verificationId.value, smsCode: otp));
+    return credentials.user != null ? true : false;
   }
 
   Future<void> createUserWithEmailAndPass(String email, String password) async {
@@ -48,4 +77,8 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> logout() async => await _auth.signOut();
+
+  Future<void> resetPassViaEmail(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
 }

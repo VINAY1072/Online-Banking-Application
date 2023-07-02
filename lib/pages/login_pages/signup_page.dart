@@ -1,6 +1,7 @@
 // import 'package:bank_app/pages/home_pages/home.dart';
 import 'package:bank_app/pages/login_pages/login_page.dart';
 import 'package:bank_app/pages/controllers/controller.dart';
+import 'package:bank_app/pages/login_pages/verify_phone.dart';
 import 'package:bank_app/pages/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -164,20 +165,19 @@ class _SignupState extends State<Signup> {
                             onPressed: () {
                               if (_formkey.currentState!.validate()) {
                                 // 1
-
-                                // 2
                                 final user = UserModel(
                                     email: controller.email.text.trim(),
                                     fullName: controller.fullName.text.trim(),
                                     phoneNo: controller.phoneNo.text.trim());
                                 SignUpController.instance.createUser(user);
+                                // 2
                                 SignUpController.instance.registerUser(
                                     controller.email.text.trim(),
                                     controller.password.text.trim());
-                                controller.email.clear();
-                                controller.password.clear();
-                                controller.fullName.clear();
-                                controller.phoneNo.clear();
+                                // 3
+                                //   SignUpController.instance.phoneAuthentication(
+                                //     controller.phoneNo.text.trim());
+                                // Get.to(() => MyVerifyPhone());
                               }
                             },
                             child: Text(

@@ -104,6 +104,10 @@ class _SettingsPageState extends State<SettingsPage> {
               child: OutlinedButton(
                 style: OutButtonStyle,
                 onPressed: () {
+                  SignUpController.instance.email.clear();
+                  SignUpController.instance.fullName.clear();
+                  SignUpController.instance.password.clear();
+                  SignUpController.instance.phoneNo.clear();
                   SignUpController.instance.logoutUser();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => Scene()));

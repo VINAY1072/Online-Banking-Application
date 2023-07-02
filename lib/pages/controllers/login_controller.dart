@@ -21,4 +21,19 @@ class LoginController extends GetxController {
       ));
     }
   }
+
+  Future<void> resetPassViaEmail(String email) async {
+    await AuthenticationRepository.instance
+        .resetPassViaEmail(email)
+        .whenComplete(() => Get.snackbar("Success", "Password Reset Email sent",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green.withOpacity(0.1),
+            colorText: Colors.green))
+        .catchError((error, stackTrace) {
+      Get.snackbar("Error", "Something went wrong. Try again",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent.withOpacity(0.1),
+          colorText: Colors.red);
+    });
+  }
 }

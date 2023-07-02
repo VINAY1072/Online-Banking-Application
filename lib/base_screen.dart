@@ -1,6 +1,6 @@
 import 'package:bank_app/pages/home_pages/home.dart';
+import 'package:bank_app/pages/settings_pages/profile.dart';
 import 'package:flutter/material.dart';
-import 'pages/settings_pages/edit_profile.dart';
 import 'pages/bills_pages/bills_manage_page.dart';
 import 'pages/funds_pages/funds_transfer_page.dart';
 
@@ -18,7 +18,7 @@ class _BaseState extends State<Base> {
     Home(),
     Funds(),
     Bills(),
-    EditProfile(),
+    ProfileScreen(),
   ];
 
   @override
