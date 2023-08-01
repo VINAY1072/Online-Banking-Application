@@ -6,8 +6,6 @@ import 'package:get/get.dart';
 import '../models/user_model.dart';
 
 class SignUpController extends GetxController {
-  var isPathSet = false.obs;
-  var profpicpath = "".obs;
   static SignUpController get instance => Get.find();
 
   final userRepo = Get.put(UserRepository());
@@ -37,10 +35,5 @@ class SignUpController extends GetxController {
 
   void phoneAuthentication(String phoneNo) {
     AuthenticationRepository.instance.phoneAuthentication(phoneNo);
-  }
-
-  void setprofimagepath(String path) {
-    profpicpath.value = path;
-    isPathSet.value = true;
   }
 }

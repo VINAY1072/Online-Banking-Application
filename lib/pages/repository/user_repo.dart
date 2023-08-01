@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -33,5 +34,9 @@ class UserRepository extends GetxController {
         await _dbase.collection("Users").where("Email", isEqualTo: email).get();
     final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
     return userData;
+  }
+
+  Future<void> updateUserDetails(UserModel userData) async {
+    await _dbase.collection("Users").doc(userData.id).update(userData.toJson());
   }
 }

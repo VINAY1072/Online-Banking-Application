@@ -1,4 +1,3 @@
-import 'package:bank_app/pages/settings_pages/account_settings.dart';
 import 'package:bank_app/pages/settings_pages/edit_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -40,12 +39,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: EdgeInsets.all(30),
           child: Center(
             child: Column(children: [
-              SizedBox(
-                  width: 120,
-                  height: 120,
-                  child: Image(
-                    image: AssetImage("images/bank_logo.png"),
-                  )),
+              Stack(
+                children: [
+                  SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image(
+                          image: AssetImage("images/bank_logo.png"),
+                        ),
+                      )),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100)),
+                      child: Icon(
+                        Icons.edit,
+                        color: Color(0xffff735c),
+                      ),
+                    ),
+                  )
+                ],
+              ),
               SizedBox(
                 height: 10,
               ),
@@ -64,10 +84,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: 200,
                 child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EditProfile()));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => EditProfile()));
                     },
                     child: Text("Edit Profile")),
               ),
@@ -84,10 +104,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   title: "Settings",
                   icon: Icons.settings,
                   onPress: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SettingsPage()));
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => SettingsPage()));
                   }),
               ProfileMenu(
                   title: "User Management",
