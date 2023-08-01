@@ -4,10 +4,10 @@ import 'package:bank_app/pages/login_pages/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-// import 'home_pages/home.dart';
 import '../../utils.dart';
 import '../controllers/controller.dart';
 import '../controllers/login_controller.dart';
+import '../controllers/profilepic_controller.dart';
 
 class Scene extends StatefulWidget {
   const Scene({super.key});
@@ -29,6 +29,7 @@ class _SceneState extends State<Scene> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(PicController());
     final controller1 = Get.put(LoginController());
     final _formkey = GlobalKey<FormState>();
     return Scaffold(
@@ -144,7 +145,7 @@ class _SceneState extends State<Scene> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (_formkey.currentState!.validate()) {
-                                    LoginController.instance.loginUser(
+                                    LoginController.instance.login(
                                         controller1.email.text.trim(),
                                         controller1.password.text.trim());
                                     controller1.email.clear();

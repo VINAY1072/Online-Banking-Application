@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:bank_app/pages/settings_pages/edit_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../controllers/controller.dart';
+import '../controllers/profile_controller.dart';
+import '../controllers/profilepic_controller.dart';
 import '../login_pages/login_page.dart';
+import '../models/user_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -13,8 +19,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  PicController picController = Get.find();
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProfileController());
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
@@ -41,41 +49,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(children: [
               Stack(
                 children: [
-                  SizedBox(
-                      width: 120,
-                      height: 120,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image(
-                          image: AssetImage("images/bank_logo.png"),
-                        ),
+                  Obx(() => CircleAvatar(
+                        radius: 70,
+                        backgroundImage: picController.isPathSet.value == true
+                            ? FileImage(File(picController.profpicpath.value))
+                                as ImageProvider
+                            : AssetImage('images/bank_logo.png'),
                       )),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100)),
-                      child: Icon(
-                        Icons.edit,
-                        color: Color(0xffff735c),
-                      ),
-                    ),
-                  )
                 ],
               ),
               SizedBox(
                 height: 10,
               ),
-              Text(
-                "Vinay P",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "vinay.parampalli@gmail.com",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+              Center(
+                child: FutureBuilder(
+                  future: controller.getUserData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData) {
+                        UserModel userData = snapshot.data as UserModel;
+                        return Column(
+                          children: [
+                            Text(
+                              userData.fullName,
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              userData.email,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text(snapshot.error.toString()),
+                        );
+                      } else {
+                        return Center(
+                          child: Text("Something went wrong"),
+                        );
+                      }
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -84,10 +106,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: 200,
                 child: ElevatedButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => EditProfile()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditProfile()));
                     },
                     child: Text("Edit Profile")),
               ),

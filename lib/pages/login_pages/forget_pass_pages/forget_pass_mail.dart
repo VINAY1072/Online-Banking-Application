@@ -1,4 +1,4 @@
-import 'package:bank_app/pages/controllers/login_controller.dart';
+// import 'package:bank_app/pages/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -15,7 +15,7 @@ class ForPassMail extends StatefulWidget {
 class _ForPassMailState extends State<ForPassMail> {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
+    // final controller = Get.put(LoginController());
     final _formkey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
@@ -89,7 +89,7 @@ class _ForPassMailState extends State<ForPassMail> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextFormField(
-                              controller: controller.email,
+                              // controller: controller.email,
                               decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.email_outlined),
                                 prefixIconColor: Colors.black,
@@ -113,8 +113,8 @@ class _ForPassMailState extends State<ForPassMail> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        LoginController.instance
-                            .resetPassViaEmail(controller.email.text.trim());
+                        // LoginController.instance
+                        //     .resetPassViaEmail(controller.email.text.trim());
                       },
                       child: Text(
                         'NEXT',

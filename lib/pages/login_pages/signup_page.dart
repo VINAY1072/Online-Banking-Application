@@ -1,4 +1,3 @@
-// import 'package:bank_app/pages/home_pages/home.dart';
 import 'package:bank_app/pages/login_pages/login_page.dart';
 import 'package:bank_app/pages/controllers/controller.dart';
 import 'package:bank_app/pages/login_pages/verify_phone.dart';
@@ -8,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../base_screen.dart';
 import '../../utils.dart';
+import '../controllers/profilepic_controller.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -27,6 +27,7 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(PicController());
     final controller = Get.put(SignUpController());
     final _formkey = GlobalKey<FormState>();
     return Scaffold(
@@ -170,7 +171,7 @@ class _SignupState extends State<Signup> {
                                     fullName: controller.fullName.text.trim(),
                                     phoneNo: controller.phoneNo.text.trim());
                                 SignUpController.instance.createUser(user);
-                                // 2
+                                // // 2
                                 SignUpController.instance.registerUser(
                                     controller.email.text.trim(),
                                     controller.password.text.trim());

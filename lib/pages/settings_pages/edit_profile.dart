@@ -1,7 +1,12 @@
+// import 'dart:html';
+import 'dart:io';
 import 'package:bank_app/pages/controllers/profile_controller.dart';
 import 'package:bank_app/pages/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../controllers/profilepic_controller.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -11,9 +16,13 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  File? imageSelected;
+  ImagePicker _picker = ImagePicker();
+  PicController picController = Get.find();
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -46,29 +55,43 @@ class _EditProfileState extends State<EditProfile> {
                       children: [
                         Stack(
                           children: [
-                            SizedBox(
-                                width: 120,
-                                height: 120,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Image(
-                                    image: AssetImage("images/bank_logo.png"),
-                                  ),
+                            Obx(() => CircleAvatar(
+                                  radius: 70,
+                                  backgroundImage:
+                                      picController.isPathSet.value == true
+                                          ? FileImage(File(picController
+                                              .profpicpath
+                                              .value)) as ImageProvider
+                                          : AssetImage('images/bank_logo.png'),
                                 )),
                             Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: Container(
-                                width: 35,
-                                height: 35,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100)),
-                                child: Icon(
-                                  Icons.camera_alt,
-                                  color: Color(0xffff735c),
-                                ),
-                              ),
-                            )
+                                bottom: 0,
+                                right: 0,
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      width: 4,
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                    ),
+                                    color: Color(0xffff735c),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: ((builder) =>
+                                              bottomsheet()));
+                                    },
+                                    child: Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )),
                           ],
                         ),
                         SizedBox(
@@ -176,6 +199,67 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Future<void> takePhoto(ImageSource source) async {
+    final PickedFile =
+        await _picker.pickImage(source: source, imageQuality: 100);
+
+    imageSelected = File(PickedFile!.path);
+    picController.setprofimagepath(imageSelected!.path);
+
+    Get.back();
+  }
+
+  Widget bottomsheet() {
+    return Container(
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: Column(
+        children: [
+          Text(
+            'Choose Profile Photo',
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton.icon(
+                onPressed: () {
+                  takePhoto(ImageSource.camera);
+                },
+                icon: Icon(
+                  Icons.camera,
+                  color: Color(0xffff735c),
+                ),
+                label:
+                    Text('Camera', style: TextStyle(color: Color(0xffff735c))),
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              TextButton.icon(
+                onPressed: () {
+                  takePhoto(ImageSource.gallery);
+                },
+                icon: Icon(
+                  Icons.image,
+                  color: Color(0xffff735c),
+                ),
+                label:
+                    Text('Gallery', style: TextStyle(color: Color(0xffff735c))),
+              )
+            ],
+          )
+        ],
       ),
     );
   }

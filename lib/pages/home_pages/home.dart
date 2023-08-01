@@ -1,9 +1,16 @@
+import 'dart:io';
+
 import 'package:bank_app/pages/data_and_other_useful_pages/mycards.dart';
 import 'package:bank_app/pages/home_pages/stats.dart';
 import 'package:bank_app/pages/home_pages/trac.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../controllers/profile_controller.dart';
+import '../controllers/profilepic_controller.dart';
 import '../data_and_other_useful_pages/card_data.dart';
+import '../models/user_model.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -21,19 +28,70 @@ class _HomeState extends State<Home> {
     });
   }
 
+  PicController picController = Get.find();
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProfileController());
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'Hi, Vinay',
-          style: TextStyle(fontFamily: 'Poppins', color: Color(0xffff735c)),
+        title: FutureBuilder(
+          future: controller.getUserData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                UserModel userData = snapshot.data as UserModel;
+                return Row(
+                  children: [
+                    SizedBox(
+                      width: 80,
+                    ),
+                    Text(
+                      "Hi, ",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins',
+                          color: Color(0xffff735c)),
+                    ),
+                    Text(
+                      userData.fullName,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: 'Poppins',
+                          color: Color(0xffff735c)),
+                    ),
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text(snapshot.error.toString()),
+                );
+              } else {
+                return Center(
+                  child: Text("Something went wrong"),
+                );
+              }
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
         leading: Padding(
           padding: EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            backgroundImage: AssetImage('images/vinay_photo.jpg'),
+          child: Stack(
+            children: [
+              Obx(() => CircleAvatar(
+                    radius: 70,
+                    backgroundImage: picController.isPathSet.value == true
+                        ? FileImage(File(picController.profpicpath.value))
+                            as ImageProvider
+                        : AssetImage('images/bank_logo.png'),
+                  )),
+            ],
           ),
         ),
         actions: [
